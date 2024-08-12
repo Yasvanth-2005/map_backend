@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema({
   region: { type: String, required: true },
-  latitude: { type: String, required: true },
-  longitude: { type: String, required: true },
+  lat: { type: String, required: true },
+  long: { type: String, required: true },
   context: { type: String, required: true },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   replys: {
@@ -18,5 +18,5 @@ const postSchema = mongoose.Schema({
   isComment: { type: Boolean, default: false },
 });
 
-const Post = mongoose.Model("Post", postSchema);
+const Post = mongoose.model("Post", postSchema);
 export default Post;

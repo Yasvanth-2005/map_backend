@@ -94,14 +94,38 @@ export const getUser = async (req, res) => {
   const user_id = req.user_id;
 
   try {
-    const user = await User.findOne({ user_id });
+    var user = await User.findById(user_id);
     if (!user) {
       return res.status(404).json({ message: "No User found" });
     }
 
+    user.password = "";
     return res.status(200).json({ user });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ message: "Internal Server Error" });
   }
+};
+
+export const editUser = async (req, res) => {
+  const { image, phoneNumber, visiblity, privacy, chatRequest, location } =
+    req.body;
+  const user_id = req.user_id;
+
+  var user = await User.findByIdAndUpdate(user_id, {
+    image,
+    phoneNumber,
+    visiblity,
+    privacy,
+    chatRequest,
+    location,
+  });
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  return res
+    .status(200)
+    .json({ user, message: "Profile Updated Successfully" });
 };
